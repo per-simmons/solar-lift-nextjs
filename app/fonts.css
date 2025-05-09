@@ -1,0 +1,45 @@
+/* Founders Grotesk Font Declarations */
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/assets/fonts/TestFoundersGrotesk-Light-BF66175e9730f02.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/assets/fonts/TestFoundersGrotesk-Regular-BF66175e972ac1c.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/assets/fonts/TestFoundersGrotesk-Medium-BF66175e9723b7a.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/assets/fonts/TestFoundersGrotesk-Semibold-BF66175e972c958.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/assets/fonts/TestFoundersGrotesk-Bold-BF66175e9700615.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply font to all elements */
+html, body, h1, h2, h3, h4, h5, h6, p, a, button, input, textarea, select, div, span {
+  font-family: 'Founders Grotesk', sans-serif !important;
+}
