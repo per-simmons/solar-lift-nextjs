@@ -1,4 +1,7 @@
-# Solar Lift Website - Final Version
+# Solar Lift Next.js Website
+
+## Project Overview
+This is the Next.js implementation of the Solar Lift marketing website, featuring responsive design for both desktop and mobile views. - Final Version
 
 This project is a conversion of the original Solar Lift website from plain HTML/CSS/JS to a modern Next.js application with Tailwind CSS.
 
