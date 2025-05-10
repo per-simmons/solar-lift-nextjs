@@ -5,6 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getBlogPostById, getPostContentHtml, getRelatedPosts } from '../../../lib/blog'
 import { useParams, useRouter } from 'next/navigation'
+// Import individual Lucide icons instead of the whole package
+import { Share2, Linkedin, Facebook, Twitter } from "lucide-react"
 
 // Custom styles for blog post content
 const customStyles = `
@@ -293,182 +295,231 @@ export default function BlogPostPage() {
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 pt-32 pb-16">
-        <div className="max-w-4xl mx-auto mb-12">
-          <Link href="/blog" className="text-[#F9C846] flex items-center mb-4 font-medium">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m15 18-6-6 6-6"/>
-            </svg>
-            Back to Blog
-                </Link>
+      {/* Header with gray background - similar to original design */}
+      <div className="bg-gray-50 pt-32 pb-8">
+        <div className="container mx-auto px-4">
+          {/* Breadcrumbs */}
+          <div className="flex items-center text-sm text-gray-500 mb-6">
+            <Link href="/blog" className="hover:text-gray-700">
+              Blog
+            </Link>
+            <span className="mx-2">›</span>
+            <Link href={`/blog?category=${post.category}`} className="hover:text-gray-700">
+              {post.category}
+            </Link>
+          </div>
           
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">{post.title}</h1>
-          
-          <div className="flex flex-wrap items-center gap-3 mb-8 text-sm text-gray-600">
-            <span className="px-3 py-1 bg-gray-100 rounded-full font-medium">{post.category}</span>
-            <span>•</span>
-            <span>{post.date}</span>
-            <span>•</span>
-            <span className="flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-              {post.readTime}
-            </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-6xl mx-auto">
+            {/* Title and author section */}
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">{post.title}</h1>
+              
+              <div className="flex items-center mb-4">
+                <Image 
+                  src={post.authorImageUrl} 
+                  width={48}
+                  height={48}
+                  alt={post.author} 
+                  className="rounded-full mr-4"
+                />
+                <div>
+                  <div className="text-sm text-gray-500">Author</div>
+                  <div className="font-medium">{post.author}</div>
+                </div>
               </div>
-
-          <div className="w-full h-[400px] mb-12 relative rounded-xl overflow-hidden">
+              
+              <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600">
+                <span className="px-3 py-1 bg-gray-100 rounded-full font-medium">{post.category}</span>
+                <span>•</span>
+                <span>{post.date}</span>
+                <span>•</span>
+                <span className="flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  {post.readTime}
+                </span>
+              </div>
+            </div>
+            
+            {/* Featured image */}
+            <div className="relative h-[300px] rounded-lg overflow-hidden">
               <Image
                 src={post.imageUrl}
-              fill
+                fill
                 alt={post.title}
-              className="object-cover"
+                className="object-cover"
               />
+            </div>
+          </div>
         </div>
       </div>
 
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row gap-12">
-            {/* Sidebar with table of contents */}
-            {tableOfContents.length > 0 && (
-              <div className="hidden lg:block w-64 flex-shrink-0">
-                <div className="sticky top-32">
-                  <div className="p-6 bg-gray-50 rounded-lg border border-gray-100">
-                    <h3 className="font-bold text-gray-800 mb-4">Table of Contents</h3>
-                    <nav className="space-y-2">
-                      {tableOfContents.map((item) => (
-                        <button
-                          key={item.id}
-                          onClick={() => scrollToSection(item.id)}
-                          className={`block text-left w-full ${
-                            item.level === 'h3' ? 'pl-4 text-sm' : ''
-                          } ${
-                            activeSection === item.id
-                              ? 'text-[#F9C846] font-medium'
-                              : 'text-gray-600 hover:text-gray-900'
-                          }`}
-                        >
-                          {item.text}
-                        </button>
-                ))}
-              </nav>
-          </div>
+      {/* Main content area */}
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-7xl mx-auto">
+          {/* Contents sidebar */}
+          {tableOfContents.length > 0 && (
+            <div className="lg:col-span-3">
+              <div className="sticky top-32">
+                <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
+                  <h2 className="text-xl font-bold text-gray-800 mb-4">Contents</h2>
+                  <nav className="space-y-3">
+                    {tableOfContents.map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => scrollToSection(item.id)}
+                        className={`block text-left w-full ${
+                          item.level === 'h3' ? 'pl-4 text-sm' : ''
+                        } ${
+                          activeSection === item.id
+                            ? 'text-[#F9C846] font-medium'
+                            : 'text-gray-600 hover:text-gray-900'
+                        }`}
+                      >
+                        {item.text}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
 
-                  <div className="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-100">
-                    <div className="flex items-center gap-3 mb-4">
+                <div className="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-100">
+                  <div className="flex items-center gap-3 mb-4">
                     <Image 
                       src={post.authorImageUrl} 
-                        width={48}
-                        height={48}
+                      width={48}
+                      height={48}
                       alt={post.author} 
-                        className="rounded-full"
+                      className="rounded-full"
                     />
-                <div>
-                        <h3 className="font-bold text-gray-800">{post.author}</h3>
-                        <p className="text-sm text-gray-600">{post.authorRole}</p>
+                    <div>
+                      <h3 className="font-bold text-gray-800">{post.author}</h3>
+                      <p className="text-sm text-gray-600">{post.authorRole}</p>
+                    </div>
+                  </div>
+                  <div className="border-t border-gray-200 pt-4">
+                    <a
+                      href="https://calendly.com/pat-solarlift/30min"
+                      className="block w-full py-2 bg-[#F9C846] text-center text-gray-900 rounded font-medium hover:bg-[#e0b53c] transition-colors"
+                      target="_blank"
+                    >
+                      Book a Strategy Call
+                    </a>
+                  </div>
                 </div>
               </div>
-                    <div className="border-t border-gray-200 pt-4">
-                      <a
-                        href="https://calendly.com/pat-solarlift/30min"
-                        className="block w-full py-2 bg-[#F9C846] text-center text-gray-900 rounded font-medium hover:bg-[#e0b53c] transition-colors"
-                        target="_blank"
-                      >
-                        Book a Strategy Call
+            </div>
+          )}
+            
+          {/* Main content */}
+          <div className="lg:col-span-7">
+            <article className="prose prose-lg max-w-none 
+              prose-headings:font-bold prose-headings:text-gray-800 
+              prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6
+              prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-4
+              prose-p:text-gray-700 prose-p:mb-6 prose-p:leading-relaxed
+              prose-ul:ml-6 prose-ul:list-disc prose-ul:mb-6
+              prose-ol:list-none prose-ol:pl-0 prose-ol:mb-6
+              prose-ol:counter-reset-[list-counter]
+              prose-li:mb-4 prose-li:leading-relaxed
+              prose-ol>prose-li:relative prose-ol>prose-li:pl-0 
+              prose-ol>prose-li:counter-increment-[list-counter]
+              prose-ol>prose-li:before:content-[counter(list-counter)'.'] 
+              prose-ol>prose-li:before:font-bold prose-ol>prose-li:before:text-gray-800
+              prose-ol>prose-li:before:mr-3 prose-ol>prose-li:before:inline-block
+              prose-blockquote:border-l-4 prose-blockquote:border-[#F9C846] 
+              prose-blockquote:bg-yellow-50 prose-blockquote:pl-6 prose-blockquote:py-3 
+              prose-blockquote:italic prose-blockquote:text-gray-700
+              prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+              prose-pre:bg-gray-800 prose-pre:text-gray-100 prose-pre:p-4 prose-pre:rounded-lg
+              prose-a:text-[#F9C846] prose-a:no-underline hover:prose-a:underline
+              prose-strong:text-gray-800 prose-strong:font-bold
+              prose-img:rounded-lg prose-img:shadow-md">
+              <div 
+                ref={contentRef}
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
+            </article>
+              
+            {/* Author card for mobile */}
+            <div className="mt-16 p-6 bg-gray-50 rounded-lg border border-gray-100 lg:hidden">
+              <div className="flex items-center gap-3 mb-4">
+                <Image
+                  src={post.authorImageUrl}
+                  width={48}
+                  height={48}
+                  alt={post.author}
+                  className="rounded-full"
+                />
+                <div>
+                  <h3 className="font-bold text-gray-800">{post.author}</h3>
+                  <p className="text-sm text-gray-600">{post.authorRole}</p>
+                </div>
+              </div>
+              <div className="border-t border-gray-200 pt-4">
+                <a
+                  href="https://calendly.com/pat-solarlift/30min"
+                  className="block w-full py-3 bg-[#F9C846] text-center text-gray-900 rounded font-medium hover:bg-[#e0b53c] transition-colors"
+                  target="_blank"
+                >
+                  Book a Free Strategy Call
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-            )}
-            
-            {/* Main content */}
-            <div className="flex-1 min-w-0">
-              <article className="prose prose-lg max-w-none lg:max-w-3xl 
-                prose-headings:font-bold prose-headings:text-gray-800 
-                prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
-                prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
-                prose-p:text-gray-700 prose-p:mb-4
-                prose-ul:ml-6 prose-ul:list-disc prose-ul:mb-4
-                prose-ol:list-none prose-ol:pl-0 prose-ol:mb-4
-                prose-ol:counter-reset-[list-counter]
-                prose-li:mb-4
-                prose-ol>prose-li:relative prose-ol>prose-li:pl-0 
-                prose-ol>prose-li:counter-increment-[list-counter]
-                prose-ol>prose-li:before:content-[counter(list-counter)'.'] 
-                prose-ol>prose-li:before:font-bold prose-ol>prose-li:before:text-gray-800
-                prose-ol>prose-li:before:mr-2 prose-ol>prose-li:before:inline-block
-                prose-blockquote:border-l-4 prose-blockquote:border-[#F9C846] 
-                prose-blockquote:bg-yellow-50 prose-blockquote:pl-4 prose-blockquote:py-2 
-                prose-blockquote:italic
-                prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-                prose-pre:bg-gray-800 prose-pre:text-gray-100 prose-pre:p-4 prose-pre:rounded
-                prose-a:text-[#F9C846] prose-a:no-underline hover:prose-a:underline">
-                <div 
-                  ref={contentRef}
-                  dangerouslySetInnerHTML={{ __html: content }}
-                />
-              </article>
-              
-              {/* Author card for mobile */}
-              <div className="mt-16 p-6 bg-gray-50 rounded-lg border border-gray-100 lg:hidden">
-                <div className="flex items-center gap-3 mb-4">
-                    <Image
-                    src={post.authorImageUrl}
-                    width={48}
-                    height={48}
-                    alt={post.author}
-                    className="rounded-full"
-                  />
-                  <div>
-                    <h3 className="font-bold text-gray-800">{post.author}</h3>
-                    <p className="text-sm text-gray-600">{post.authorRole}</p>
-                  </div>
-                </div>
-                <div className="border-t border-gray-200 pt-4">
-                  <a
-                    href="https://calendly.com/pat-solarlift/30min"
-                    className="block w-full py-3 bg-[#F9C846] text-center text-gray-900 rounded font-medium hover:bg-[#e0b53c] transition-colors"
-                    target="_blank"
-                  >
-                    Book a Free Strategy Call
-                  </a>
-          </div>
-        </div>
         
-              {/* Related articles */}
-              {relatedPosts.length > 0 && (
-                <div className="mt-16">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-6">Related Articles</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {relatedPosts.map((relatedPost) => (
-                      <div key={relatedPost.id} className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <Link href={`/blog/${relatedPost.id}`} className="block">
-                          <Image
-                            src={relatedPost.imageUrl}
-                            width={300}
-                            height={180}
-                            alt={relatedPost.title}
-                            className="w-full h-[180px] object-cover"
-                          />
+            {/* Related articles */}
+            {relatedPosts.length > 0 && (
+              <div className="mt-16">
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Related Articles</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                  {relatedPosts.map((relatedPost) => (
+                    <div key={relatedPost.id} className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                      <Link href={`/blog/${relatedPost.id}`} className="block">
+                        <Image
+                          src={relatedPost.imageUrl}
+                          width={300}
+                          height={180}
+                          alt={relatedPost.title}
+                          className="w-full h-[180px] object-cover"
+                        />
+                      </Link>
+                      <div className="p-6">
+                        <span className="text-xs font-medium text-[#F9C846] uppercase tracking-wider">{relatedPost.category}</span>
+                        <Link href={`/blog/${relatedPost.id}`}>
+                          <h3 className="font-bold mt-1 hover:text-[#F9C846] transition-colors">{relatedPost.title}</h3>
                         </Link>
-                        <div className="p-6">
-                          <span className="text-xs font-medium text-[#F9C846] uppercase tracking-wider">{relatedPost.category}</span>
-                          <Link href={`/blog/${relatedPost.id}`}>
-                            <h3 className="font-bold mt-1 hover:text-[#F9C846] transition-colors">{relatedPost.title}</h3>
-                          </Link>
-                          <p className="text-sm text-gray-600 mt-2 line-clamp-2">{relatedPost.excerpt}</p>
-            </div>
+                        <p className="text-sm text-gray-600 mt-2 line-clamp-2">{relatedPost.excerpt}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-                    ))}
-      </div>
-            </div>
-              )}
+          
+          {/* Share buttons column */}
+          <div className="lg:col-span-2 hidden lg:block">
+            <div className="sticky top-32">
+              <div className="text-gray-500 mb-4 text-sm font-medium">SHARE</div>
+              <div className="flex flex-col space-y-4">
+                <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
+                  <Linkedin className="w-5 h-5 text-gray-500" />
+                </button>
+                <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
+                  <Facebook className="w-5 h-5 text-gray-500" />
+                </button>
+                <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
+                  <Twitter className="w-5 h-5 text-gray-500" />
+                </button>
+                <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
+                  <Share2 className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-          </div>
+      </div>
       
       {/* CALL TO ACTION */}
       <div className="bg-gray-900 text-white py-16">

@@ -248,14 +248,15 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Content is required' }, { status: 400 });
     }
     
-    // For now, we'll just return the content directly as HTML
-    // In production, you would use a markdown processor here
+    // Process the markdown content to HTML
+    const htmlContent = await processMarkdownToHtml(body.content, { processObjections: true });
+    
     return NextResponse.json({ 
       success: true, 
-      html: body.content || '<p>No content provided</p>' 
+      html: htmlContent
     });
   } catch (error) {
     console.error('Error in POST handler:', error);
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Server error', message: error.message }, { status: 500 });
   }
 } 

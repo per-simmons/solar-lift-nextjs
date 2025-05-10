@@ -11,26 +11,33 @@ import { getAllBlogPosts, getAllCategories } from "../../lib/blog"
 const FALLBACK_POSTS = [
   {
     id: 1,
-    title: 'How to Qualify Solar Leads in 60 Seconds',
-    excerpt: 'Learn how to quickly qualify solar leads with our proven framework.',
-    slug: 'how-to-qualify-solar-leads',
-    category: 'Lead Qualification',
-    date: '2023-09-15',
-    author: 'Solar Lift Team',
-    readTime: '6 min read',
+    title: 'How to Generate High-Quality Solar Leads',
+    excerpt: 'Discover the most effective strategies for generating qualified solar leads that convert into installations.',
+    category: 'Lead Generation',
+    date: '2023-01-15',
+    readTime: '5 min read',
     imageUrl: '/assets/dummy-images/blog-post-1-dummy.png',
     featured: true
   },
   {
     id: 2,
-    title: 'Quality Solar Leads: Why Top Installers Choose Smart Sourcing',
-    excerpt: 'Discover why leading solar installers prefer professional lead generation.',
-    slug: 'quality-solar-leads',
-    category: 'Lead Generation',
-    date: '2023-08-22',
-    author: 'Solar Lift Team',
-    readTime: '5 min read',
-    imageUrl: '/assets/dummy-images/blog-post-2-dummy.png'
+    title: 'The Complete Guide to Solar Sales',
+    excerpt: 'Learn the proven techniques to boost your solar sales and close more deals.',
+    category: 'Sales',
+    date: '2023-02-20',
+    readTime: '7 min read',
+    imageUrl: '/assets/dummy-images/blog-post-2-dummy.png',
+    featured: false
+  },
+  {
+    id: 3,
+    title: 'Understanding Solar Installation Costs',
+    excerpt: 'A comprehensive breakdown of solar installation costs and how to explain them to potential customers.',
+    category: 'Installation',
+    date: '2023-03-10',
+    readTime: '6 min read',
+    imageUrl: '/assets/dummy-images/blog-post-3-dummy.png',
+    featured: false
   }
 ];
 
@@ -39,63 +46,70 @@ const FALLBACK_CATEGORIES = ['Lead Qualification', 'Lead Generation', 'Appointme
 
 export default function BlogPage() {
   const [blogPosts, setBlogPosts] = useState(FALLBACK_POSTS)
-  const [categories, setCategories] = useState(FALLBACK_CATEGORIES)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [categories, setCategories] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
-  const [activeCategory, setActiveCategory] = useState("all")
-  const [searchQuery, setSearchQuery] = useState("")
-  
+
   useEffect(() => {
     // Load posts and categories on component mount
     async function fetchData() {
       try {
-        const [posts, cats] = await Promise.all([
-          getAllBlogPosts(),
-          getAllCategories()
-        ]);
+        console.log('Fetching blog posts and categories...')
+        setIsLoading(true)
         
-        if (posts.length > 0) {
-          setBlogPosts(posts);
+        // Fetch blog posts
+        const posts = await getAllBlogPosts()
+        
+        if (posts && posts.length > 0) {
+          console.log('Blog posts fetched successfully:', posts.length)
+          setBlogPosts(posts)
+        } else {
+          console.log('No blog posts found, using fallback')
+          setBlogPosts(FALLBACK_POSTS)
         }
         
-        if (cats.length > 0) {
-          setCategories(cats);
+        // Fetch categories
+        const allCategories = await getAllCategories()
+        
+        if (allCategories && allCategories.length > 0) {
+          console.log('Categories fetched successfully:', allCategories)
+          setCategories(allCategories)
         }
         
-        setIsLoaded(true);
+        setIsLoading(false)
       } catch (error) {
-        console.error('Error loading blog data:', error);
-        setIsError(false); // Don't show error since we have fallbacks
-        setIsLoaded(true);
+        console.error('Error fetching blog data:', error)
+        setIsError(true)
+        setIsLoading(false)
+        setBlogPosts(FALLBACK_POSTS)
       }
     }
     
-    // Set timeout to exit loading state even if fetch takes too long
-    const timer = setTimeout(() => {
-      if (!isLoaded) {
-        console.log('Force exiting loading state');
-        setIsLoaded(true);
+    // Call the fetch function
+    fetchData()
+    
+    // Provide a fallback timeout to ensure loading state doesn't get stuck
+    const timeout = setTimeout(() => {
+      if (isLoading) {
+        console.log('Loading timeout triggered, using fallback data')
+        setIsLoading(false)
       }
-    }, 3000);
+    }, 5000)
     
-    fetchData();
-    
-    // Cleanup timeout
-    return () => clearTimeout(timer);
-  }, []);
+    // Clean up timeout
+    return () => clearTimeout(timeout)
+  }, []) // Empty dependency array to only run on mount
   
-  // Filter posts based on active category and search query
+  // Filter posts based on category and search query
   const filteredPosts = blogPosts.filter(post => {
-    // Filter by category
-    const categoryMatch = activeCategory === "all" || post.category === activeCategory;
+    const matchesCategory = selectedCategory ? post.category === selectedCategory : true
+    const matchesSearch = searchQuery.trim() === '' ? true : 
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
     
-    // Filter by search query
-    const searchMatch = searchQuery === "" || 
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (post.category && post.category.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    return categoryMatch && searchMatch;
+    return matchesCategory && matchesSearch
   });
   
   // Featured post is the first one marked as featured
@@ -154,9 +168,9 @@ export default function BlogPage() {
         <div className="flex flex-wrap items-center justify-between gap-4 mb-16">
           <div className="flex flex-wrap gap-2">
             <button 
-              onClick={() => setActiveCategory("all")}
+              onClick={() => setSelectedCategory('')}
               className={`px-4 py-2 rounded-full text-sm font-medium ${
-                activeCategory === "all" 
+                selectedCategory === '' 
                   ? "bg-gray-800 text-white" 
                   : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
               }`}
@@ -168,9 +182,9 @@ export default function BlogPage() {
             {categories.map(category => (
               <button 
                 key={category}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-full text-sm font-medium ${
-                  activeCategory === category 
+                  selectedCategory === category 
                     ? "bg-gray-800 text-white" 
                     : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
                 }`}
@@ -196,9 +210,18 @@ export default function BlogPage() {
           </div>
         </div>
 
-        {!isLoaded ? (
+        {/* Blog post content */}
+        {isLoading ? (
           <div className="flex justify-center items-center min-h-[400px]">
             <p className="text-xl text-gray-500">Loading blog posts...</p>
+          </div>
+        ) : isError ? (
+          <div className="flex justify-center items-center min-h-[400px]">
+            <p className="text-xl text-gray-500">Error loading blog posts. Please try again later.</p>
+          </div>
+        ) : filteredPosts.length === 0 ? (
+          <div className="flex justify-center items-center min-h-[400px]">
+            <p className="text-xl text-gray-500">No blog posts found matching your criteria.</p>
           </div>
         ) : (
           <>
@@ -286,7 +309,7 @@ export default function BlogPage() {
                 <div className="bg-white rounded-lg p-8 text-center border border-gray-100">
                   <p className="text-gray-600 mb-2">No articles found matching your criteria.</p>
                   <button 
-                    onClick={() => {setActiveCategory("all"); setSearchQuery("")}}
+                    onClick={() => {setSelectedCategory(''); setSearchQuery('')}}
                     className="text-[#F9C846] font-medium hover:underline"
                   >
                     View all articles
