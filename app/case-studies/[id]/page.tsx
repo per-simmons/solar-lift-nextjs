@@ -1,0 +1,353 @@
+'use client'
+
+import { useEffect, useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { Clock, Calendar, ChevronLeft } from "lucide-react"
+
+// Sample case study data matching our carousel data
+const caseStudies = [
+  {
+    id: 1,
+    clientName: 'WBE',
+    clientType: 'Residential',
+    title: '2x increase in booked site visits for California-based installer',
+    excerpt: 'Learn how Solar Lift helped WBE double their booked site visits and increase their close rate by 3.1x compared to typical marketplace leads.',
+    category: 'Appointment Setting',
+    location: 'California',
+    companySize: '11-50 employees',
+    readTime: '10 min',
+    publishDate: 'May 19, 2024',
+    content: `
+      <p>WBE is a leading residential solar installer in California, helping homeowners reduce their energy bills and carbon footprint with high-quality solar installations. With rising competition in the California market, WBE needed to find a way to increase their lead flow and improve their conversion rates.</p>
+
+      <h2>Challenges</h2>
+      <p>The client needed to boost their site visits and lead-to-appointment conversions. Despite having a strong online presence and multiple marketing channels at their disposal, they struggled to generate consistent, high-quality leads. Their sales team was spending too much time qualifying leads rather than focusing on closing deals.</p>
+
+      <h2>Solutions</h2>
+      <p>Solar Lift implemented a comprehensive lead generation strategy for WBE that included:</p>
+      <ul>
+        <li>Targeted digital campaigns focused on high-value neighborhoods with optimal solar potential</li>
+        <li>Pre-qualification system that vetted homeowners based on specific criteria including roof condition, energy usage, and financial qualification</li>
+        <li>Automated scheduling system that allowed interested homeowners to book site visits directly</li>
+        <li>Custom CRM integration to seamlessly transfer lead data to WBE's sales team</li>
+      </ul>
+
+      <h2>Results</h2>
+      <p>Within the first three months of working with Solar Lift, WBE saw remarkable improvements:</p>
+      <ul>
+        <li>146 qualified leads delivered, with 93 resulting in booked site visits</li>
+        <li>Site visit bookings increased by 112% compared to the previous quarter</li>
+        <li>Close rate improved to 3.1x higher than leads from typical marketplace sources</li>
+        <li>Average cost per acquisition decreased by 42%</li>
+        <li>Sales cycle shortened by an average of 11 days</li>
+      </ul>
+      
+      <p>By delivering pre-qualified leads that were genuinely interested in solar installation, Solar Lift helped WBE's sales team focus on what they do best - closing deals rather than chasing unqualified prospects.</p>
+    `,
+    stats: [
+      { label: 'Leads delivered in 3 months', value: '146' },
+      { label: 'Close rate vs. typical marketplace', value: '3.1x' }
+    ],
+    imageUrl: "/assets/case-study-1-wbe/wbe-solar-installation.jpg",
+    logoUrl: "/assets/case-study-1-wbe/wbe-logo-client-case-study-1.png"
+  },
+  {
+    id: 2,
+    clientName: 'TerraVolt',
+    clientType: 'Commercial',
+    title: '45% reduction in customer acquisition costs for mid-size commercial installer',
+    excerpt: 'See how TerraVolt reduced their customer acquisition costs by leveraging Solar Lift\'s focused lead generation strategies.',
+    category: 'Lead Generation',
+    location: 'Texas',
+    companySize: '51-200 employees',
+    readTime: '12 min',
+    publishDate: 'April 22, 2024',
+    content: `
+      <p>TerraVolt is a growing commercial solar installer based in Texas, specializing in medium to large-scale installations for businesses across the southwest. As they looked to expand their operations, they needed to find a more cost-effective way to acquire new customers.</p>
+
+      <h2>Challenges</h2>
+      <p>TerraVolt was facing several challenges in their lead generation efforts:</p>
+      <ul>
+        <li>High customer acquisition costs that were eating into profit margins</li>
+        <li>Inconsistent lead quality from existing channels</li>
+        <li>Difficulty reaching decision-makers in target businesses</li>
+        <li>Long sales cycles that were tying up resources</li>
+      </ul>
+
+      <h2>Solutions</h2>
+      <p>Solar Lift developed a tailored lead generation strategy for TerraVolt that included:</p>
+      <ul>
+        <li>Highly targeted outreach to businesses with optimal energy usage profiles</li>
+        <li>Direct access to key decision-makers through our exclusive business network</li>
+        <li>Educational webinars and content focused on commercial solar ROI</li>
+        <li>Qualification process that prioritized businesses ready to make investment decisions</li>
+      </ul>
+
+      <h2>Results</h2>
+      <p>Over a 15-month partnership with Solar Lift, TerraVolt achieved impressive results:</p>
+      <ul>
+        <li>227 qualified appointments with decision-makers</li>
+        <li>45% reduction in customer acquisition costs</li>
+        <li>120% achievement of monthly KPI targets</li>
+        <li>Sales cycle reduced by 34 days on average</li>
+        <li>18 large commercial installations directly attributed to Solar Lift leads</li>
+      </ul>
+      
+      <p>By focusing on quality over quantity and connecting directly with decision-makers, Solar Lift helped TerraVolt dramatically improve their sales efficiency and reduce the cost of acquiring new customers.</p>
+    `,
+    stats: [
+      { label: 'Booked appointments in 15 months', value: '227' },
+      { label: 'Avg. monthly KPIs', value: '120%' }
+    ],
+    imageUrl: "/assets/dummy-images/case-study-2-dummy.png"
+  },
+  {
+    id: 3,
+    clientName: 'SolarEdge',
+    clientType: 'Residential',
+    title: '320+ qualified leads for nationwide residential solar provider',
+    excerpt: 'How Solar Lift delivered high-intent leads across multiple regions for a major national solar provider.',
+    stats: [
+      { label: 'Deals won in first 3 months', value: '9' },
+      { label: 'ROI on marketing spend', value: '285%' }
+    ],
+    imageUrl: "/assets/dummy-images/case-study-3-dummy.png"
+  },
+  {
+    id: 4,
+    clientName: 'GreenSpark',
+    clientType: 'Residential',
+    title: '73% higher conversion rate from lead to install for regional mid-Atlantic installer',
+    excerpt: 'Discover how GreenSpark achieved dramatically improved conversion rates and reduced customer acquisition costs with Solar Lift.',
+    stats: [
+      { label: 'Qualified leads generated in 6 months', value: '284' },
+      { label: 'Average cost per acquisition reduction', value: '2.4x' }
+    ],
+    imageUrl: "/assets/dummy-images/case-study-4-dummy.png"
+  }
+];
+
+export default function CaseStudyPage({ params }: { params: { id: string } }) {
+  const [caseStudy, setCaseStudy] = useState<typeof caseStudies[0] | null>(null)
+  
+  useEffect(() => {
+    // Find the case study that matches the ID from the URL
+    const study = caseStudies.find(study => study.id === parseInt(params.id))
+    if (study) {
+      setCaseStudy(study)
+    }
+  }, [params.id])
+  
+  if (!caseStudy) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Loading case study...</p>
+      </div>
+    )
+  }
+  
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* White header section */}
+      <div className="bg-white w-full pb-16">
+        <div className="container mx-auto px-4 md:px-8 pt-6">
+          {/* Logo and back button */}
+          <div className="flex justify-between items-center mb-8">
+            <div className="logo">
+              <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={120} height={32} />
+            </div>
+            <Link 
+              href="/case-studies" 
+              className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <ChevronLeft size={20} className="mr-1" />
+              Back to case studies
+            </Link>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 items-center mb-8">
+            <div>
+              {/* Client logo */}
+              {caseStudy.logoUrl && (
+                <div className="mb-4">
+                  <Image
+                    src={caseStudy.id === 1 ? "/assets/case-study-1-wbe/wbe-logo-client-case-study-1.png" : caseStudy.logoUrl}
+                    alt={`${caseStudy.clientName} logo`}
+                    width={200}
+                    height={80}
+                    style={{ objectFit: 'contain', objectPosition: 'left' }}
+                  />
+                </div>
+              )}
+              
+              {/* Lead text in accent color */}
+              <p className="text-[#ffce01] font-medium mb-2 uppercase tracking-wide">
+                {caseStudy.category} FOR {caseStudy.clientType} SOLAR PROVIDER
+              </p>
+
+              {/* Main headline */}
+              <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-8">
+                {caseStudy.title}
+              </h1>
+
+              {/* Metrics */}
+              <div className="grid grid-cols-2 gap-8 mb-8">
+                {caseStudy.stats.map((stat, index) => (
+                  <div key={index}>
+                    <p className="text-4xl md:text-5xl font-bold text-[#ffce01]">{stat.value}</p>
+                    <p className="text-sm text-gray-600">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Header image */}
+            <div className="relative h-[300px] md:h-[400px]">
+              <Image
+                src={caseStudy.id === 1 ? "/assets/case-study-1-wbe/wbe-solar-installation.jpg" : (caseStudy.imageUrl || "/assets/dummy-images/case-study-1-dummy.png")}
+                alt={`${caseStudy.clientName} case study`}
+                fill
+                className="object-cover rounded-lg"
+              />
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-gray-200 my-8"></div>
+
+          {/* Company details in 4 columns */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+            <div>
+              <p className="font-semibold text-sm">Category</p>
+              <p className="text-sm">{caseStudy.category || caseStudy.clientType}</p>
+            </div>
+            <div>
+              <p className="font-semibold text-sm">Industry</p>
+              <p className="text-sm">Solar Energy</p>
+            </div>
+            <div>
+              <p className="font-semibold text-sm">Location</p>
+              <p className="text-sm">{caseStudy.location || 'United States'}</p>
+            </div>
+            <div>
+              <p className="font-semibold text-sm">Company size</p>
+              <p className="text-sm">{caseStudy.companySize || '1-500 employees'}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Gray content section */}
+      <div className="bg-gray-100 flex-grow pt-16 pb-12">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Main content - 2/3 width */}
+            <div className="md:col-span-2">
+              {/* If we have content, render it as HTML, otherwise show the excerpt */}
+              {caseStudy.content ? (
+                <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: caseStudy.content }} />
+              ) : (
+                <p className="text-gray-700 mb-12">{caseStudy.excerpt}</p>
+              )}
+            </div>
+
+            {/* Sidebar - 1/3 width */}
+            <div className="md:col-span-1">
+              {/* Reading time and publish date */}
+              <div className="mb-8">
+                <div className="flex items-center mb-2">
+                  <Clock className="h-4 w-4 mr-2 text-gray-500" />
+                  <span className="text-sm font-medium">Reading duration</span>
+                  <span className="ml-auto text-sm">{caseStudy.readTime || '10 min'}</span>
+                </div>
+                <div className="flex items-center">
+                  <Calendar className="h-4 w-4 mr-2 text-gray-500" />
+                  <span className="text-sm font-medium">Published</span>
+                  <span className="ml-auto text-sm">{caseStudy.publishDate || 'May 19, 2024'}</span>
+                </div>
+              </div>
+
+              {/* CTA Card */}
+              <div className="bg-gray-200 rounded-lg p-6">
+                <h3 className="font-bold text-lg mb-2">Want similar results for your solar business?</h3>
+                <p className="text-sm mb-4">Let's create your custom lead generation strategy.</p>
+                <a 
+                  href="https://calendly.com/pat-solarlift/30min?share_attribution=expiring_link"
+                  target="_blank"
+                  className="bg-[#ffce01] hover:bg-[#e6b900] text-black font-medium py-2 px-4 rounded inline-block"
+                >
+                  Book a free strategy call
+                </a>
+              </div>
+              
+              {/* Back to case studies button */}
+              <div className="mt-6">
+                <Link 
+                  href="/case-studies" 
+                  className="inline-flex items-center text-gray-600 hover:text-gray-900"
+                >
+                  <ChevronLeft size={16} className="mr-1" />
+                  Back to all case studies
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between">
+            <div className="mb-8 md:mb-0">
+              <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={150} height={40} className="mb-4" />
+              <p className="text-gray-400 max-w-md">
+                We deliver qualified homeowners actively looking for solar so your team can focus on closing deals, not chasing interest.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+              <div>
+                <h3 className="font-bold mb-4">Quick Links</h3>
+                <ul className="space-y-2">
+                  <li><Link href="/#how-it-works" className="text-gray-300 hover:text-white">How We Work</Link></li>
+                  <li><Link href="/#different" className="text-gray-300 hover:text-white">Why Us</Link></li>
+                  <li><Link href="/case-studies" className="text-gray-300 hover:text-white">Results</Link></li>
+                  <li><Link href="/#faq" className="text-gray-300 hover:text-white">FAQs</Link></li>
+                  <li><Link href="/blog" className="text-gray-300 hover:text-white">Blog</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-bold mb-4">Contact</h3>
+                <ul className="space-y-2">
+                  <li className="flex items-center">
+                    <a href="mailto:info@solarlift.com" className="text-gray-300 hover:text-white">info@solarlift.com</a>
+                  </li>
+                  <li className="flex items-center">
+                    <a href="tel:+1234567890" className="text-gray-300 hover:text-white">(123) 456-7890</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-400 mb-4 md:mb-0">
+              © {new Date().getFullYear()} Solar Lift. All rights reserved.
+            </p>
+            <div className="flex space-x-4">
+              <a href="#" className="text-gray-400 hover:text-white">
+                <i className="fab fa-linkedin text-xl"></i>
+              </a>
+              <a href="#" className="text-gray-400 hover:text-white">
+                <i className="fab fa-twitter text-xl"></i>
+              </a>
+              <a href="#" className="text-gray-400 hover:text-white">
+                <i className="fab fa-facebook text-xl"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+} 
