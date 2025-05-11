@@ -356,13 +356,11 @@ export default function BlogPage() {
             </section>
           </>
         )}
-      </div>
-
-      {/* CALL TO ACTION */}
-      <div className="bg-gray-900 text-white py-16 mt-16">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to grow your solar business?</h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+        
+        {/* CALL TO ACTION - Now in white background */}
+        <div className="bg-white text-center py-16 mt-16 rounded-xl border border-gray-100 shadow-sm">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Ready to grow your solar business?</h2>
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             Book a free strategy call to discuss how we can help you generate more qualified solar leads and increase your installation volume.
           </p>
           <a 

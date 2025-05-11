@@ -117,7 +117,7 @@ export default function CaseStudiesPage() {
           <div className="nav-links">
             <Link href="/#how-it-works">How We Work</Link>
             <Link href="/#different">Why Us</Link>
-            <Link href="/case-studies" className="active">Results</Link>
+            <Link href="/#case-studies-section" className="active">Results</Link>
             <Link href="/#faq">FAQs</Link>
             <Link href="/blog">Blog</Link>
           </div>
