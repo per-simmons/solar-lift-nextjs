@@ -1,4 +1,4 @@
-import { getCaseStudyById } from '../../lib/case-studies';
+import { getCaseStudyById, getCaseStudyContentHtml } from '../../lib/case-studies';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,6 +13,9 @@ export default async function CaseStudyServerPage({ params }: { params: { id: st
     notFound();
   }
   
+  // Convert markdown content to HTML
+  const htmlContent = await getCaseStudyContentHtml(caseStudy.content);
+  
   return (
     <div className="min-h-screen flex flex-col">
       {/* White header section */}
@@ -21,12 +24,12 @@ export default async function CaseStudyServerPage({ params }: { params: { id: st
           {/* Logo and back button */}
           <div className="flex justify-between items-center mb-8">
             <div className="logo">
-              <Link href="/">
+              <Link href="/#case-studies-section">
                 <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={120} height={32} />
               </Link>
             </div>
             <Link 
-              href="/case-studies" 
+              href="/#case-studies-section" 
               className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ChevronLeft className="mr-1" />
@@ -112,34 +115,18 @@ export default async function CaseStudyServerPage({ params }: { params: { id: st
           <div className="grid md:grid-cols-3 gap-8">
             {/* Main content - 2/3 width */}
             <div className="md:col-span-2">
-              {/* If we have content, render it as markdown */}
-              <div className="prose prose-lg max-w-none">
-                {caseStudy.content.split('\n').map((paragraph, idx) => {
-                  // Handle headers
-                  if (paragraph.startsWith('# ')) {
-                    return <h1 key={idx}>{paragraph.replace('# ', '')}</h1>;
-                  }
-                  if (paragraph.startsWith('## ')) {
-                    return <h2 key={idx}>{paragraph.replace('## ', '')}</h2>;
-                  }
-                  if (paragraph.startsWith('### ')) {
-                    return <h3 key={idx}>{paragraph.replace('### ', '')}</h3>;
-                  }
-                  
-                  // Handle lists
-                  if (paragraph.startsWith('- ')) {
-                    return <ul key={idx}><li>{paragraph.replace('- ', '')}</li></ul>;
-                  }
-                  
-                  // Handle empty paragraphs
-                  if (paragraph.trim() === '') {
-                    return null;
-                  }
-                  
-                  // Regular paragraph
-                  return <p key={idx}>{paragraph}</p>;
-                })}
-              </div>
+              {/* Render the markdown content as HTML with proper styling */}
+              <div 
+                className="prose prose-lg max-w-none 
+                  prose-headings:font-bold prose-headings:text-gray-800 
+                  prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
+                  prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
+                  prose-p:text-gray-700 prose-p:mb-4
+                  prose-ul:ml-6 prose-ul:list-disc prose-ul:mb-4
+                  prose-ol:list-decimal prose-ol:pl-6 prose-ol:mb-4 
+                  prose-li:mb-2 prose-li:pl-2"
+                dangerouslySetInnerHTML={{ __html: htmlContent }}
+              />
             </div>
 
             {/* Sidebar - 1/3 width */}
@@ -174,7 +161,7 @@ export default async function CaseStudyServerPage({ params }: { params: { id: st
               {/* Back to case studies button */}
               <div className="mt-6">
                 <Link 
-                  href="/case-studies" 
+                  href="/#case-studies-section" 
                   className="inline-flex items-center text-gray-600 hover:text-gray-900"
                 >
                   <ChevronLeft className="mr-1" />
@@ -191,18 +178,18 @@ export default async function CaseStudyServerPage({ params }: { params: { id: st
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between">
             <div className="mb-8 md:mb-0">
-              <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={150} height={40} className="mb-4" />
+              <Image src="/assets/logo/solar-lift-logo-white.png" alt="Solar Lift Logo" width={150} height={40} className="mb-4" />
               <p className="text-gray-400 max-w-md">
                 We deliver qualified homeowners actively looking for solar so your team can focus on closing deals, not chasing interest.
               </p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-8">
               <div>
                 <h3 className="font-bold mb-4">Quick Links</h3>
                 <ul className="space-y-2">
                   <li><Link href="/#how-it-works" className="text-gray-300 hover:text-white">How We Work</Link></li>
                   <li><Link href="/#different" className="text-gray-300 hover:text-white">Why Us</Link></li>
-                  <li><Link href="/case-studies" className="text-gray-300 hover:text-white">Results</Link></li>
+                  <li><Link href="/#case-studies-section" className="text-gray-300 hover:text-white">Results</Link></li>
                   <li><Link href="/#faq" className="text-gray-300 hover:text-white">FAQs</Link></li>
                   <li><Link href="/blog" className="text-gray-300 hover:text-white">Blog</Link></li>
                 </ul>
@@ -211,10 +198,7 @@ export default async function CaseStudyServerPage({ params }: { params: { id: st
                 <h3 className="font-bold mb-4">Contact</h3>
                 <ul className="space-y-2">
                   <li className="flex items-center">
-                    <a href="mailto:info@solarlift.com" className="text-gray-300 hover:text-white">info@solarlift.com</a>
-                  </li>
-                  <li className="flex items-center">
-                    <a href="tel:+1234567890" className="text-gray-300 hover:text-white">(123) 456-7890</a>
+                    <a href="mailto:pat@solarlift.com" className="text-gray-300 hover:text-white">pat@solarlift.com</a>
                   </li>
                 </ul>
               </div>
@@ -224,17 +208,6 @@ export default async function CaseStudyServerPage({ params }: { params: { id: st
             <p className="text-gray-400 mb-4 md:mb-0">
               © {new Date().getFullYear()} Solar Lift. All rights reserved.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white">
-                <i className="fab fa-linkedin text-xl"></i>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <i className="fab fa-twitter text-xl"></i>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <i className="fab fa-facebook text-xl"></i>
-              </a>
-            </div>
           </div>
         </div>
       </footer>

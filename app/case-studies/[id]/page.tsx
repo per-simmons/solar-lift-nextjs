@@ -1,13 +1,5 @@
-'use client';
-
-import dynamic from 'next/dynamic';
-
-// Dynamically import the client component with no SSR
-const ClientComponent = dynamic(
-  () => import('./page-client'),
-  { ssr: false }
-);
+import ServerComponent from './page-server';
 
 export default function CaseStudyPage({ params }: { params: { id: string } }) {
-  return <ClientComponent params={params} />;
+  return <ServerComponent params={params} />;
 } 
