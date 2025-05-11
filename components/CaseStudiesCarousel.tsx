@@ -194,22 +194,16 @@ const CaseStudiesCarousel: React.FC = () => {
                             {study.clientType}
                           </div>
                         </div>
-                        <h3 className="text-2xl font-bold mb-4 leading-tight">{study.title}</h3>
-                        {study.id === 1 ? (
-                          <Link
-                            href="/case-studies/1"
-                            className="inline-flex items-center gap-2 font-semibold text-gray-900 hover:text-[#FFB800] group mt-auto"
-                          >  
-                            <div className="w-14 h-14 rounded-full border border-[#FFB800] text-[#FFB800] flex items-center justify-center group-hover:bg-[#FFB800] group-hover:text-white transition-all duration-200">
-                              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                              </svg>
-                            </div>
-                            Read the case study
+                        <h3 className="text-2xl font-bold mb-4 leading-tight">
+                          <Link 
+                            href={`/case-studies/${study.id}`} 
+                            className="hover:text-[#FFB800] transition-colors"
+                          >
+                            {study.title}
                           </Link>
-                        ) : (
-                        <a
-                          href="#"
+                        </h3>
+                        <Link
+                          href={`/case-studies/${study.id}`}
                           className="inline-flex items-center gap-2 font-semibold text-gray-900 hover:text-[#FFB800] group mt-auto"
                         >  
                           <div className="w-14 h-14 rounded-full border border-[#FFB800] text-[#FFB800] flex items-center justify-center group-hover:bg-[#FFB800] group-hover:text-white transition-all duration-200">
@@ -218,8 +212,7 @@ const CaseStudiesCarousel: React.FC = () => {
                             </svg>
                           </div>
                           Read the case study
-                        </a>
-                        )}
+                        </Link>
                       </div>
                       
                       {/* Metrics cards */}
