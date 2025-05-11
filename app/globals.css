@@ -1768,3 +1768,8 @@ footer {
   }
 }
 /* test commit line */
+
+/* Hide default footer when viewing case study pages */
+.hide-default-footer > body > footer {
+  display: none;
+}

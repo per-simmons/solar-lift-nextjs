@@ -212,7 +212,11 @@ export default function CaseStudiesPage() {
                 </div>
               </div>
               
-              <h2 className="text-2xl font-bold mb-3">{study.title}</h2>
+              <h2 className="text-2xl font-bold mb-3">
+                <Link href={`/case-studies/${study.id}`} className="hover:text-[#FFB800] transition-colors">
+                  {study.title}
+                </Link>
+              </h2>
               <p className="text-gray-600 mb-6">{study.excerpt}</p>
               
               <div className="grid grid-cols-2 gap-4 mb-6">

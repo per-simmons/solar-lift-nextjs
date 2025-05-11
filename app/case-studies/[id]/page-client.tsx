@@ -61,12 +61,27 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
+  // Hide the default footer
+  useEffect(() => {
+    const footerElement = document.querySelector('body > footer');
+    if (footerElement) {
+      (footerElement as HTMLElement).style.display = 'none';
+    }
+    
+    // Restore footer on unmount
+    return () => {
+      const footerElement = document.querySelector('body > footer');
+      if (footerElement) {
+        (footerElement as HTMLElement).style.display = '';
+      }
+    };
+  }, []);
+  
   useEffect(() => {
     async function loadCaseStudy() {
       try {
         setLoading(true);
         setError(null);
-        console.log(`Loading case study ID: ${params.id}`);
         
         // Validate ID parameter
         const numericId = parseInt(params.id);
@@ -80,7 +95,6 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
         const study = await getCaseStudyById(numericId);
         
         if (study) {
-          console.log(`Case study loaded: ${study.title}`);
           setCaseStudy(study);
           
           // Convert the markdown content to HTML
@@ -93,11 +107,9 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
             setContent(study.content);
           }
         } else {
-          console.log(`No case study found with ID: ${numericId}, trying fallback`);
           // Fallback to hardcoded case study if not found
           const fallbackStudy = FALLBACK_CASE_STUDIES.find(s => s.id === numericId);
           if (fallbackStudy) {
-            console.log(`Using fallback case study for ID: ${numericId}`);
             setCaseStudy(fallbackStudy);
             setContent(fallbackStudy.content);
           } else {
@@ -112,7 +124,6 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
         try {
           const fallbackStudy = FALLBACK_CASE_STUDIES.find(s => s.id === parseInt(params.id));
           if (fallbackStudy) {
-            console.log(`Using fallback case study after error for ID: ${params.id}`);
             setCaseStudy(fallbackStudy);
             setContent(fallbackStudy.content);
             // Clear the error if we successfully loaded the fallback
@@ -178,21 +189,50 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
   
   return (
     <div className="min-h-screen flex flex-col">
+      {/* FLOATING NAVIGATION BAR */}
+      <nav className="floating-nav">
+        <div className="nav-container">
+          <div className="logo">
+            <Link href="/">
+              <Image src="/assets/logo/solar-lift-logo-v3.png" alt="Solar Lift Logo" width={120} height={32} />
+            </Link>
+          </div>
+          {/* Mobile-only CTA button that's always visible in the navbar */}
+          <a href="https://calendly.com/pat-solarlift/30min?share_attribution=expiring_link" 
+             className="mobile-navbar-cta-button" 
+             target="_blank">
+            Book a Free Strategy Call
+          </a>
+          <div className="nav-links">
+            <Link href="/#how-it-works">How We Work</Link>
+            <Link href="/#different">Why Us</Link>
+            <Link href="/#case-studies-section" className="active">Results</Link>
+            <Link href="/#faq">FAQs</Link>
+            <Link href="/blog">Blog</Link>
+          </div>
+          <a href="https://calendly.com/pat-solarlift/30min?share_attribution=expiring_link" 
+             className="nav-cta-button" 
+             target="_blank">
+            Book a Strategy Call
+          </a>
+          <div className="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </nav>
+
       {/* White header section */}
-      <div className="bg-white w-full pb-16">
+      <div className="bg-white w-full pb-16 pt-24">
         <div className="container mx-auto px-4 md:px-8 pt-6">
-          {/* Logo and back button */}
-          <div className="flex justify-between items-center mb-8">
-            <div className="logo">
-              <Link href="/#case-studies-section">
-                <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={120} height={32} />
-              </Link>
-            </div>
+          {/* Back button */}
+          <div className="flex justify-end items-center mb-8">
             <Link 
               href="/case-studies" 
               className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
             >
-              <ChevronLeft size={20} className="mr-1" />
+              <ChevronLeft className="mr-1" />
               Back to case studies
             </Link>
           </div>
@@ -203,7 +243,7 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
               {caseStudy.logoUrl && (
                 <div className="mb-4">
                   <Image
-                    src={caseStudy.id === 1 ? "/assets/case-study-1-wbe/wbe-logo-client-case-study-1.png" : caseStudy.logoUrl}
+                    src={caseStudy.logoUrl}
                     alt={`${caseStudy.clientName} logo`}
                     width={200}
                     height={80}
@@ -236,7 +276,7 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
             {/* Header image */}
             <div className="relative h-[300px] md:h-[400px]">
               <Image
-                src={caseStudy.id === 1 ? "/assets/case-study-1-wbe/wbe-solar-installation.jpg" : (caseStudy.imageUrl || "/assets/dummy-images/case-study-1-dummy.png")}
+                src={caseStudy.imageUrl || "/assets/dummy-images/case-study-1-dummy.png"}
                 alt={`${caseStudy.clientName} case study`}
                 fill
                 className="object-cover rounded-lg"
@@ -275,12 +315,22 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
           <div className="grid md:grid-cols-3 gap-8">
             {/* Main content - 2/3 width */}
             <div className="md:col-span-2">
-              {/* If we have content, render it as HTML, otherwise show the excerpt */}
-              {content ? (
-                <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: content }} />
-              ) : (
-                <p className="text-gray-700 mb-12">{caseStudy.excerpt}</p>
-              )}
+              {/* Render the markdown content as HTML with proper styling */}
+              <div 
+                className="prose prose-lg max-w-none 
+                  prose-headings:font-bold prose-headings:text-gray-800 
+                  prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
+                  prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
+                  prose-p:text-gray-700 prose-p:mb-4
+                  prose-ul:ml-6 prose-ul:mb-4
+                  prose-ol:ml-6 prose-ol:mb-4
+                  prose-li:mb-2
+                  [&_ul]:list-disc [&_ul]:text-black
+                  [&_ol]:list-decimal
+                  [&_ol>li]:pl-0 [&_ol>li]:marker:text-black [&_ol]:marker:font-bold
+                  [&_ul>li]:marker:text-black"
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
             </div>
 
             {/* Sidebar - 1/3 width */}
@@ -318,7 +368,7 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
                   href="/case-studies" 
                   className="inline-flex items-center text-gray-600 hover:text-gray-900"
                 >
-                  <ChevronLeft size={16} className="mr-1" />
+                  <ChevronLeft className="mr-1" />
                   Back to all case studies
                 </Link>
               </div>
@@ -326,6 +376,45 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
           </div>
         </div>
       </div>
+      
+      {/* Footer - custom implementation for this page */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between">
+            <div className="mb-8 md:mb-0">
+              <Image src="/assets/logo/solar-lift-logo-white.png" alt="Solar Lift Logo" width={150} height={40} className="mb-4" />
+              <p className="text-gray-400 max-w-md">
+                We deliver qualified homeowners actively looking for solar so your team can focus on closing deals, not chasing interest.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="font-bold mb-4">Quick Links</h3>
+                <ul className="space-y-2">
+                  <li><Link href="/#how-it-works" className="text-gray-300 hover:text-white">How We Work</Link></li>
+                  <li><Link href="/#different" className="text-gray-300 hover:text-white">Why Us</Link></li>
+                  <li><Link href="/#case-studies-section" className="text-gray-300 hover:text-white">Results</Link></li>
+                  <li><Link href="/#faq" className="text-gray-300 hover:text-white">FAQs</Link></li>
+                  <li><Link href="/blog" className="text-gray-300 hover:text-white">Blog</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-bold mb-4">Contact</h3>
+                <ul className="space-y-2">
+                  <li className="flex items-center">
+                    <a href="mailto:pat@solarlift.com" className="text-gray-300 hover:text-white">pat@solarlift.com</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-400 mb-4 md:mb-0">
+              © {new Date().getFullYear()} Solar Lift. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 } 

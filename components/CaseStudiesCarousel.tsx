@@ -101,7 +101,7 @@ const CaseStudiesCarousel: React.FC = () => {
   }, []);
 
   return (
-    <section className="case-studies-section py-16 md:py-24 bg-gray-100">
+    <section id="case-studies-section" className="case-studies-section py-16 md:py-24 bg-gray-100">
       <div className="container mx-auto px-4">
         <div className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center">
           <div className="header-content max-w-2xl">
@@ -240,7 +240,7 @@ const CaseStudiesCarousel: React.FC = () => {
         </div>
 
         <div className="mt-12">
-          <a href="#" className="read-all-cases-btn inline-flex items-center justify-center text-gray-800 hover:text-[#FFB800] font-semibold text-xl py-4 px-8 bg-white rounded-xl shadow-sm transition-all duration-200">
+          <Link href="/case-studies" className="read-all-cases-btn inline-flex items-center justify-center text-gray-800 hover:text-[#FFB800] font-semibold text-xl py-4 px-8 bg-white rounded-xl shadow-sm transition-all duration-200">
             Read all cases
             <svg
               className="ml-2"
@@ -256,7 +256,7 @@ const CaseStudiesCarousel: React.FC = () => {
             >
               <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>
-          </a>
+          </Link>
         </div>
       </div>
     </section>
