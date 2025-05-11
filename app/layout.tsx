@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import './fonts.css'
+import Footer from '../components/Footer'
 
 export const metadata: Metadata = {
   title: 'Solar Lift - More Solar Installs. Less Chasing Leads.',
@@ -21,6 +22,7 @@ export default function RootLayout({
       </head>
       <body className="font-founders-grotesk">
         {children}
+        <Footer />
       </body>
     </html>
   )

@@ -634,17 +634,6 @@ export default function Home() {
           <a href="https://calendly.com/pat-solarlift/30min?share_attribution=expiring_link" className="cta-button" target="_blank">Book a Free Strategy Call</a>
         </div>
       </section>
-
-      <footer>
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-logo">
-              <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={150} height={40} />
-            </div>
-            <p>&copy; 2025 Solar Lift. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </main>
   )
 }
