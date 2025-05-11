@@ -1,12 +1,16 @@
 ---
-title: "The Solar Ad Copy Formula: 7 Text Hooks That Actually Convert Homeowners (With Ready-to-Paste Examples)"
-excerpt: "Stop wasting ad budget on solar Facebook ads that don't convert. Get 7 proven ad copy formulas that make homeowners stop scrolling and start clicking."
-category: "Digital Marketing"
-date: "May 10, 2025"
-readTime: "8 min"
-author: "Solar Lift Team"
-authorRole: "Marketing Team"
-imageUrl: "/blog/articles/solar-facebook-ad-copy-image.png"
+title: >-
+  The Solar Ad Copy Formula: 7 Text Hooks That Actually Convert Homeowners (With
+  Ready-to-Paste Examples)
+excerpt: >-
+  Stop wasting ad budget on solar Facebook ads that don't convert. Get 7 proven
+  ad copy formulas that make homeowners stop scrolling and start clicking.
+category: Digital Marketing
+date: 'May 10, 2025'
+readTime: 8 min
+author: Pat Simmons
+authorRole: Founder
+imageUrl: /blog/articles/solar-facebook-ad-copy-image.png
 featured: true
 ---
 

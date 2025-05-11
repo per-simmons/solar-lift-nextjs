@@ -1,12 +1,15 @@
 ---
-title: "Stop Burning Money: 50 Essential Negative Keywords Every Solar Installer Needs"
-excerpt: "Learn how top solar installers save $500+ monthly with our curated list of 50 high-impact negative keywords. Download our ready-to-use CSV and start eliminating wasted ad spend today."
-category: "Digital Marketing"
-date: "May 8, 2025"
-readTime: "10 min"
-author: "Solar Lift Team"
-authorRole: "Marketing Team"
-imageUrl: "/blog/articles/solar-negative-keywords-blog-image.png"
+title: 'Stop Burning Money: 50 Essential Negative Keywords Every Solar Installer Needs'
+excerpt: >-
+  Learn how top solar installers save $500+ monthly with our curated list of 50
+  high-impact negative keywords. Download our ready-to-use CSV and start
+  eliminating wasted ad spend today.
+category: Digital Marketing
+date: 'May 8, 2025'
+readTime: 10 min
+author: Pat Simmons
+authorRole: Founder
+imageUrl: /blog/articles/solar-negative-keywords-blog-image.png
 featured: false
 ---
 
