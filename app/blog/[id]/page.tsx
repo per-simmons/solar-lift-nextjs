@@ -275,7 +275,14 @@ export default function BlogPostPage() {
     
     // Now process all headings to add IDs and build TOC
     const processHeadings = () => {
-      const headings = contentRef.current.querySelectorAll('h1, h2, h3, h4, h5, h6');
+      // First, remove all h1 tags to avoid headline duplication
+      const h1Elements = contentRef.current.querySelectorAll('h1');
+      h1Elements.forEach(h1 => {
+        h1.remove();
+      });
+      
+      // Process remaining headings for TOC
+      const headings = contentRef.current.querySelectorAll('h2, h3, h4, h5, h6');
       console.log(`Found ${headings.length} headings in content`);
       
       if (headings.length === 0) {
@@ -396,7 +403,9 @@ export default function BlogPostPage() {
         <nav className="floating-nav">
           <div className="nav-container">
             <div className="logo">
-              <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={120} height={32} />
+              <Link href="/">
+                <Image src="/assets/logo/solar-lift-logo-v3.png" alt="Solar Lift Logo" width={120} height={32} />
+              </Link>
             </div>
             {/* Mobile-only CTA button that's always visible in the navbar */}
             <a href="https://calendly.com/pat-solarlift/30min?share_attribution=expiring_link" 

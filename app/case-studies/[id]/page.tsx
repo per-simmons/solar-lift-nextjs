@@ -155,7 +155,9 @@ export default function CaseStudyPage({ params }: { params: { id: string } }) {
           {/* Logo and back button */}
           <div className="flex justify-between items-center mb-8">
             <div className="logo">
-              <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={120} height={32} />
+              <Link href="/">
+                <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={120} height={32} />
+              </Link>
             </div>
             <Link 
               href="/case-studies" 

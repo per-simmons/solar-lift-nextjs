@@ -81,7 +81,9 @@ export default function CaseStudiesPage() {
       <nav className="floating-nav">
         <div className="nav-container">
           <div className="logo">
-            <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={120} height={32} />
+            <Link href="/">
+              <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={120} height={32} />
+            </Link>
           </div>
           {/* Mobile-only CTA button that's always visible in the navbar */}
           <a href="https://calendly.com/pat-solarlift/30min?share_attribution=expiring_link" 
