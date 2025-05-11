@@ -4,6 +4,30 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import CaseStudiesCarousel from '../components/CaseStudiesCarousel'
+import { getAllBlogPosts } from '../lib/blog'
+import { ChevronRight } from 'lucide-react'
+
+// Fallback blog posts in case API fails
+const FALLBACK_BLOG_POSTS = [
+  {
+    id: 1,
+    title: 'How to Generate High-Quality Solar Leads',
+    excerpt: 'Discover the most effective strategies for generating qualified solar leads that convert into installations.',
+    imageUrl: '/assets/dummy-images/blog-post-1-dummy.png',
+  },
+  {
+    id: 2,
+    title: 'The Complete Guide to Solar Sales',
+    excerpt: 'Learn the proven techniques to boost your solar sales and close more deals with qualified prospects.',
+    imageUrl: '/assets/dummy-images/blog-post-2-dummy.png',
+  },
+  {
+    id: 3,
+    title: 'Understanding Solar Installation Costs',
+    excerpt: 'A comprehensive breakdown of solar installation costs and how to explain them to potential customers.',
+    imageUrl: '/assets/dummy-images/blog-post-3-dummy.png',
+  }
+];
 
 export default function Home() {
   // State for mobile menu
@@ -18,6 +42,27 @@ export default function Home() {
   // State and ref for video player
   const [isPlaying, setIsPlaying] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  
+  // State for blog posts
+  const [blogPosts, setBlogPosts] = useState(FALLBACK_BLOG_POSTS)
+  
+  // Fetch blog posts
+  useEffect(() => {
+    async function fetchBlogPosts() {
+      try {
+        const posts = await getAllBlogPosts();
+        if (posts && posts.length > 0) {
+          // Take only the first 3 posts
+          setBlogPosts(posts.slice(0, 3));
+        }
+      } catch (error) {
+        console.error('Error fetching blog posts for homepage:', error);
+        // Keep fallback posts in state
+      }
+    }
+    
+    fetchBlogPosts();
+  }, []);
   
   // Toggle video play/pause
   const togglePlay = () => {
@@ -474,6 +519,61 @@ export default function Home() {
 
       {/* CASE STUDIES SECTION */}
       <CaseStudiesCarousel />
+
+      {/* BLOG SECTION */}
+      <section className="blog-highlight-section py-16" id="blog">
+        <div className="container">
+          <div className="text-center mb-10">
+            <span className="text-[#F7B500] font-medium text-base px-4 py-1.5 uppercase tracking-wide inline-block">Our Blog</span>
+            <h2 className="text-3xl md:text-4xl font-bold mt-4 max-w-3xl mx-auto">
+              Expand Your Marketing and Sales<br className="hidden md:block" /> Knowledge For Your Solar Business
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {blogPosts.map((post) => (
+              <div key={post.id} className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <Link href={`/blog/${post.id}`} className="block">
+                  <div className="relative h-[200px] w-full">
+                    <Image 
+                      src={post.imageUrl} 
+                      alt={post.title} 
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </Link>
+                <div className="p-6">
+                  <Link href={`/blog/${post.id}`}>
+                    <h3 className="text-xl font-bold mb-3 hover:text-[#F7B500] transition-colors line-clamp-2">{post.title}</h3>
+                  </Link>
+                  <p className="text-gray-600 mb-4 line-clamp-3">
+                    {post.excerpt && post.excerpt.length > 120 
+                      ? `${post.excerpt.substring(0, 120)}...` 
+                      : post.excerpt}
+                  </p>
+                  <Link 
+                    href={`/blog/${post.id}`} 
+                    className="inline-flex items-center font-medium text-[#F7B500] hover:underline"
+                  >
+                    Read more
+                    <ChevronRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-10 text-center">
+            <Link 
+              href="/blog" 
+              className="inline-block px-8 py-3 bg-white text-gray-800 border border-[#F7B500] rounded-full font-medium hover:bg-[#F7B500] hover:text-white transition-colors"
+            >
+              View all articles
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* FAQ SECTION */}
       <section className="faq" id="faq">
