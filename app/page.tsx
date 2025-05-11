@@ -273,7 +273,7 @@ export default function Home() {
                 <Image src="/assets/header_image/man_smiling_single_subject.png" alt="Solar Lift Subject" className="subject-image" fill />
                 {/* Tags that should appear IN FRONT of the subject */}
                 <div className="ui-tags-front">
-                  <Image src="/assets/header_image/ui-tag-3.png" alt="UI Tag 3" className="ui-tag ui-tag-3" width={250} height={100} />
+                  <Image src="/assets/header_image/ui-tag-3.png" alt="UI Tag 3" className="ui-tag ui-tag-3" width={200} height={80} />
                   <Image src="/assets/header_image/ui-tag-4.png" alt="UI Tag 4" className="ui-tag ui-tag-4" width={200} height={80} />
                 </div>
               </div>
@@ -289,10 +289,8 @@ export default function Home() {
             <div className="gradient-mask left-mask"></div>
             <div className="logo-carousel">
               <div className="logo-slide">
-                <Image src="/assets/client_logos/brooklyn-solarworks-logo.png" alt="Brooklyn Solarworks" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
                 <Image src="/assets/client_logos/cei-logo.png" alt="CEI" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
                 <Image src="/assets/client_logos/core-logo.png" alt="Core" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
-                <Image src="/assets/client_logos/decker-electric-logo.png" alt="Decker Electric" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
                 <Image src="/assets/client_logos/future-communities-logo.png" alt="Future Communities" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
                 <Image src="/assets/client_logos/gardner-energy-logo.png" alt="Gardner Energy" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
                 <Image src="/assets/client_logos/momentum-logo.png" alt="Momentum" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
@@ -300,10 +298,10 @@ export default function Home() {
                 <Image src="/assets/client_logos/smart-wave-solar-logo.png" alt="Smart Wave Solar" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
                 <Image src="/assets/client_logos/wbe-logo.png" alt="WBE" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
                 {/* Duplicate logos for seamless looping */}
-                <Image src="/assets/client_logos/brooklyn-solarworks-logo.png" alt="Brooklyn Solarworks" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
                 <Image src="/assets/client_logos/cei-logo.png" alt="CEI" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
                 <Image src="/assets/client_logos/core-logo.png" alt="Core" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
-                <Image src="/assets/client_logos/decker-electric-logo.png" alt="Decker Electric" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
+                <Image src="/assets/client_logos/future-communities-logo.png" alt="Future Communities" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
+                <Image src="/assets/client_logos/gardner-energy-logo.png" alt="Gardner Energy" width={180} height={90} style={{objectFit: 'contain', width: 'auto'}} />
               </div>
             </div>
             <div className="gradient-mask right-mask"></div>
