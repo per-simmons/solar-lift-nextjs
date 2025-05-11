@@ -6,6 +6,7 @@ date: "May 10, 2025"
 readTime: "8 min"
 author: Pat Simmons
 authorRole: Founder
+imageUrl: "/blog/articles/qualify-solar-leads-article-image.png"
 ---
 
 # How to Qualify Solar Leads Without Burning Your Sales Team Out

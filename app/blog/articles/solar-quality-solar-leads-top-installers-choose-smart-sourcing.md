@@ -1,13 +1,14 @@
-**Title:** Quality Solar Leads: Why Top Installers Choose Smart Sourcing Over DIY
-**Slug:** quality-solar-leads-strategic-approach
-**Meta Description:** Discover why top solar installers invest in quality solar leads rather than draining resources on DIY generation. Learn the strategic approach that delivers immediate results and sustainable growth.
-**Category:** Lead Generation
-**Author:** Pat Simmons
-**Featured Image Alt Text:** Solar installer reviewing quality leads on tablet while team installs panels in background
-**Tags:** solar leads, lead generation, solar installation, quality leads, solar business growth
-**Minutes Read:** 7
-**Date:** May 10, 2025
-**Featured:** Yes
+---
+title: "Quality Solar Leads: Why Top Installers Choose Smart Sourcing Over DIY"
+excerpt: "Discover why top solar installers invest in quality solar leads rather than draining resources on DIY generation. Learn the strategic approach that delivers immediate results and sustainable growth."
+category: "Lead Generation"
+date: "May 10, 2025"
+readTime: "7 min"
+author: "Pat Simmons"
+authorRole: "CEO"
+imageUrl: "/blog/articles/solar-quality-solar-leads-top-installers-choose-smart-sourcing-image.png"
+featured: true
+---
 
 # Quality Solar Leads: Why Top Installers Choose Smart Sourcing Over DIY
 

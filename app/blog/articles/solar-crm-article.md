@@ -1,13 +1,14 @@
-**Title:** The Solar Installer's No-BS Guide to Lead Management Software: Features That Actually Matter
-**Slug:** solar-lead-management-software-comparison
-**Meta Description:** Compare 6 solar lead management software options side-by-side. Discover which CRM features actually matter for installation companies and get a migration timeline to implement smoothly.
-**Category:** Marketing
-**Author:** Solar Lift Team
-**Featured Image Alt Text:** Solar installation team reviewing lead management software on tablet
-**Tags:** CRM, Lead Management, Solar Software, Sales Pipeline
-**Minutes Read:** 8
-**Date:** May 10, 2025
-**Featured:** Yes
+---
+title: "The Solar Installer's No-BS Guide to Lead Management Software: Features That Actually Matter"
+excerpt: "Compare 6 solar lead management software options side-by-side. Discover which CRM features actually matter for installation companies and get a migration timeline to implement smoothly."
+category: "Marketing"
+date: "May 10, 2025"
+readTime: "8 min"
+author: "Solar Lift Team"
+authorRole: "Marketing Team"
+imageUrl: "/blog/articles/solar-crm-article-image.png"
+featured: true
+---
 
 # The Solar Installer's No-BS Guide to Lead Management Software: Features That Actually Matter
 

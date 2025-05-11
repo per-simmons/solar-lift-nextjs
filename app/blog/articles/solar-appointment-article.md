@@ -1,3 +1,14 @@
+---
+title: "The 7-Step Solar Appointment Setting Playbook: Turn Leads Into Booked Roof Visits"
+excerpt: "Getting leads is only half the battle—it's turning them into actual site visits that puts money in your pocket."
+category: "Sales"
+date: "May 12, 2025"
+readTime: "9 min"
+author: "Pat Simmons"
+authorRole: "Founder"
+imageUrl: "/blog/articles/solar-appointment-article-image.png"
+---
+
 # The 7-Step Solar Appointment Setting Playbook: Turn Leads Into Booked Roof Visits
 
 *Getting leads is only half the battle—it's turning them into actual site visits that puts money in your pocket.*

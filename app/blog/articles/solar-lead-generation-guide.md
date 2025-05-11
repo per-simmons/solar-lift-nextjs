@@ -7,7 +7,7 @@ readTime: "8 min read"
 author: "Pat Simmons"
 authorRole: "CEO, Solar Lift"
 authorImageUrl: "/assets/blog/authors/solar-lift-headshot-pat-simmons.png"
-imageUrl: "/assets/dummy-images/blog-post-1-dummy.png"
+imageUrl: "/blog/articles/solar-lead-generation-guide.png"
 featured: true
 ---
 
