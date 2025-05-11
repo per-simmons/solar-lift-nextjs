@@ -1,18 +1,19 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Search } from "lucide-react"
+import { getAllCaseStudies } from "../lib/case-studies-client"
 
-// Sample case study data matching our carousel data
-const caseStudies = [
+// Fallback case study data in case there's an issue with loading from markdown files
+const FALLBACK_CASE_STUDIES = [
   {
     id: 1,
-    clientName: 'SunBright',
+    clientName: 'WBE',
     clientType: 'Residential',
     title: '2x increase in booked site visits for California-based installer',
-    excerpt: 'Learn how Solar Lift helped SunBright double their booked site visits and increase their close rate by 3.1x compared to typical marketplace leads.',
+    excerpt: 'Learn how Solar Lift helped WBE double their booked site visits and increase their close rate by 3.1x compared to typical marketplace leads.',
     stats: [
       { label: 'Leads delivered in 3 months', value: '146' },
       { label: 'Close rate vs. typical marketplace', value: '3.1x' }
@@ -60,6 +61,28 @@ const caseStudies = [
 export default function CaseStudiesPage() {
   const [activeType, setActiveType] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
+  const [caseStudies, setCaseStudies] = useState(FALLBACK_CASE_STUDIES)
+  const [loading, setLoading] = useState(true)
+  
+  // Load case studies on component mount
+  useEffect(() => {
+    async function fetchCaseStudies() {
+      try {
+        // Attempt to load case studies from API
+        const studies = await getAllCaseStudies();
+        if (studies && studies.length > 0) {
+          setCaseStudies(studies);
+        }
+      } catch (error) {
+        console.error('Error loading case studies:', error);
+        // Keep fallback case studies if there's an error
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchCaseStudies();
+  }, []);
   
   // Filter case studies based on active type and search query
   const filteredCaseStudies = caseStudies.filter(study => {

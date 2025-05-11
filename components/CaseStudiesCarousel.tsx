@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // @ts-ignore - Ignoring type issues with Splide library
 import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getAllCaseStudies } from '../app/lib/case-studies-client';
 
 interface CaseStudy {
   id: number;
@@ -13,9 +14,12 @@ interface CaseStudy {
   clientType: string;
   title: string;
   stats: { label: string; value: string }[];
+  imageUrl?: string;
+  logoUrl?: string;
 }
 
-const caseStudies: CaseStudy[] = [
+// Fallback case studies if there's an issue loading from markdown files
+const FALLBACK_CASE_STUDIES: CaseStudy[] = [
   {
     id: 1,
     clientName: 'WBE',
@@ -61,6 +65,24 @@ const caseStudies: CaseStudy[] = [
 const CaseStudiesCarousel: React.FC = () => {
   // @ts-ignore - Using any type for Splide ref to avoid type errors
   const splideRef = useRef<any>(null);
+  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>(FALLBACK_CASE_STUDIES);
+
+  useEffect(() => {
+    async function fetchCaseStudies() {
+      try {
+        // Load case studies from API
+        const studies = await getAllCaseStudies();
+        if (studies && studies.length > 0) {
+          setCaseStudies(studies);
+        }
+      } catch (error) {
+        console.error('Error loading case studies for carousel:', error);
+        // Keep fallback studies if there's an error
+      }
+    }
+    
+    fetchCaseStudies();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {

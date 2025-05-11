@@ -1,8 +1,18 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: false,
-  swcMinify: false,
-  experimental: {
-    appDir: true,
+  swcMinify: true,
+  // Improved image configuration
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+    // This is important to unblock local image loading:
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 }
