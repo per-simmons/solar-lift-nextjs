@@ -197,6 +197,10 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
               <Image src="/assets/logo/solar-lift-logo-v3.png" alt="Solar Lift Logo" width={120} height={32} />
             </Link>
           </div>
+          {/* Mobile-only CTA button that's always visible in the navbar */}
+          <button className="mobile-navbar-cta-button">
+            Book a Free Strategy Call
+          </button>
           <div className="nav-links">
             <Link href="/#how-it-works">How We Work</Link>
             <Link href="/#different">Why Us</Link>
@@ -204,6 +208,9 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
             <Link href="/#faq">FAQs</Link>
             <Link href="/blog">Blog</Link>
           </div>
+          <button className="nav-cta-button">
+            Book a Strategy Call
+          </button>
           <div className="hamburger-menu">
             <span></span>
             <span></span>
@@ -342,6 +349,9 @@ export default function CaseStudyClientPage({ params }: { params: { id: string }
               <div className="bg-gray-200 rounded-lg p-6">
                 <h3 className="font-bold text-lg mb-2">Want similar results for your solar business?</h3>
                 <p className="text-sm mb-4">Let's create your custom lead generation strategy.</p>
+                <button className="bg-[#ffce01] hover:bg-[#e6b900] text-black font-medium py-2 px-4 rounded inline-block">
+                  Book a free strategy call
+                </button>
               </div>
               
               {/* Back to case studies button */}

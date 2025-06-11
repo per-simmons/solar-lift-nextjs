@@ -181,6 +181,10 @@ export default function Home() {
               <Image src="/assets/logo/solar-lift-logo-v3.png" alt="Solar Lift Logo" width={120} height={32} />
             </Link>
           </div>
+          {/* Mobile-only CTA button that's always visible in the navbar */}
+          <button className="mobile-navbar-cta-button">
+            Book a Free Strategy Call
+          </button>
           <div className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
             <Link href="#how-it-works" 
                   onClick={(e) => scrollToSection(e, '#how-it-works')}
@@ -206,6 +210,9 @@ export default function Home() {
               Blog
             </Link>
           </div>
+          <button className="nav-cta-button">
+            Book a Strategy Call
+          </button>
           <div className={`hamburger-menu ${mobileMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu}>
             <span></span>
             <span></span>
@@ -227,6 +234,7 @@ export default function Home() {
               <div className="pill">Solar Marketing Agency</div>
               <h1>More Solar Installs. Less Chasing Leads.</h1>
               <p>We deliver qualified homeowners actively looking for solar so your team can focus on closing deals, not chasing interest.</p>
+              <button className="cta-button">Book a Free Strategy Call</button>
               <div className="testimonial-container">
                 <Image src="/assets/client_photos/client_photos_for_stars.png" alt="Happy Solar Clients" className="client-photos" width={160} height={40} />
                 <div className="stars">★★★★★</div>
@@ -577,7 +585,8 @@ export default function Home() {
       {/* FINAL CTA SECTION */}
       <section className="final-cta" id="cta">
         <div className="container">
-          <h2>Get 10+ qualified solar leads in your area this month.</h2>
+          <h2>Book a call to get 10+ qualified solar leads in your area this month.</h2>
+          <button className="cta-button">Book a Free Strategy Call</button>
         </div>
       </section>
     </main>

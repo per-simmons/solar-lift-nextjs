@@ -108,6 +108,10 @@ export default function CaseStudiesPage() {
               <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={120} height={32} />
             </Link>
           </div>
+          {/* Mobile-only CTA button that's always visible in the navbar */}
+          <button className="mobile-navbar-cta-button">
+            Book a Free Strategy Call
+          </button>
           <div className="nav-links">
             <Link href="/#how-it-works">How We Work</Link>
             <Link href="/#different">Why Us</Link>
@@ -115,6 +119,9 @@ export default function CaseStudiesPage() {
             <Link href="/#faq">FAQs</Link>
             <Link href="/blog">Blog</Link>
           </div>
+          <button className="nav-cta-button">
+            Book a Strategy Call
+          </button>
           <div className="hamburger-menu">
             <span></span>
             <span></span>
@@ -238,6 +245,9 @@ export default function CaseStudiesPage() {
               increase your conversion rates with our proven strategies.
             </p>
           </div>
+          <button className="flex-shrink-0 bg-[#F9C846] hover:bg-[#e6b901] text-black font-bold py-3 px-8 rounded-full transition-colors">
+            Book a Free Strategy Call
+          </button>
         </div>
       </div>
     </>
