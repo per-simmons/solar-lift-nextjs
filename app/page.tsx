@@ -39,9 +39,6 @@ export default function Home() {
   // State for carousel
   const [currentSlide, setCurrentSlide] = useState(0)
   
-  // State and ref for video player
-  const [isPlaying, setIsPlaying] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
   
   // State for blog posts
   const [blogPosts, setBlogPosts] = useState(FALLBACK_BLOG_POSTS)
@@ -64,18 +61,6 @@ export default function Home() {
     fetchBlogPosts();
   }, []);
   
-  // Toggle video play/pause
-  const togglePlay = () => {
-    if (!videoRef.current) return
-    
-    if (isPlaying) {
-      videoRef.current.pause()
-      setIsPlaying(false)
-    } else {
-      videoRef.current.play()
-      setIsPlaying(true)
-    }
-  }
   const totalSlides = 3 // Total number of case study slides
   
   // Refs for sections
@@ -435,32 +420,6 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="video-container">
-            <div className="custom-video-player">
-              <video
-                ref={videoRef}
-                src="/assets/intro_video/solar-lift-intro-final.mp4"
-                poster="/assets/intro_video/solar-lift-intro-video-thumbnail.jpg"
-                playsInline
-                onClick={togglePlay}
-              />
-              <div className={`play-button ${isPlaying ? 'hidden' : ''}`} onClick={togglePlay}>
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8 5.14v13.72c0 .23 0 .34.06.42a.5.5 0 0 0 .29.23c.1.03.21.01.44-.04l10.42-6.5c.22-.14.33-.2.37-.3a.5.5 0 0 0 0-.34c-.04-.1-.15-.16-.37-.3L8.79 5.53c-.23-.05-.34-.07-.44-.04a.5.5 0 0 0-.29.23c-.06.08-.06.2-.06.42z" fill="white"/>
-                </svg>
-              </div>
-              {isPlaying && (
-                <div className="video-overlay" onClick={togglePlay}>
-                  <div className="pause-button">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="7" y="5" width="3" height="14" rx="1" fill="white"/>
-                      <rect x="14" y="5" width="3" height="14" rx="1" fill="white"/>
-                    </svg>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
 
           <div className="stats-container">
             <div className="stat-card">
