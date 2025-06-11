@@ -108,12 +108,6 @@ export default function CaseStudiesPage() {
               <Image src="/assets/logo/solar_lift_logo_v2.png" alt="Solar Lift Logo" width={120} height={32} />
             </Link>
           </div>
-          {/* Mobile-only CTA button that's always visible in the navbar */}
-          <a href="https://calendly.com/pat-solarlift/30min?share_attribution=expiring_link" 
-             className="mobile-navbar-cta-button" 
-             target="_blank">
-            Book a Free Strategy Call
-          </a>
           <div className="nav-links">
             <Link href="/#how-it-works">How We Work</Link>
             <Link href="/#different">Why Us</Link>
@@ -121,11 +115,6 @@ export default function CaseStudiesPage() {
             <Link href="/#faq">FAQs</Link>
             <Link href="/blog">Blog</Link>
           </div>
-          <a href="https://calendly.com/pat-solarlift/30min?share_attribution=expiring_link" 
-             className="nav-cta-button" 
-             target="_blank">
-            Book a Strategy Call
-          </a>
           <div className="hamburger-menu">
             <span></span>
             <span></span>
@@ -249,13 +238,6 @@ export default function CaseStudiesPage() {
               increase your conversion rates with our proven strategies.
             </p>
           </div>
-          <a 
-            href="https://calendly.com/pat-solarlift/30min?share_attribution=expiring_link"
-            target="_blank"
-            className="flex-shrink-0 bg-[#F9C846] hover:bg-[#e6b901] text-black font-bold py-3 px-8 rounded-full transition-colors"
-          >
-            Book a Free Strategy Call
-          </a>
         </div>
       </div>
     </>

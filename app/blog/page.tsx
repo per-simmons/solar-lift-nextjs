@@ -128,12 +128,6 @@ export default function BlogPage() {
               <Image src="/assets/logo/solar-lift-logo-v3.png" alt="Solar Lift Logo" width={120} height={32} />
             </Link>
           </div>
-          {/* Mobile-only CTA button that's always visible in the navbar */}
-          <a href="https://calendly.com/pat-solarlift/30min?share_attribution=expiring_link" 
-             className="mobile-navbar-cta-button" 
-             target="_blank">
-            Book a Free Strategy Call
-          </a>
           <div className="nav-links">
             <Link href="/#how-it-works">How We Work</Link>
             <Link href="/#different">Why Us</Link>
@@ -141,11 +135,6 @@ export default function BlogPage() {
             <Link href="/#faq">FAQs</Link>
             <Link href="/blog" className="active">Blog</Link>
           </div>
-          <a href="https://calendly.com/pat-solarlift/30min?share_attribution=expiring_link" 
-             className="nav-cta-button" 
-             target="_blank">
-            Book a Strategy Call
-          </a>
           <div className="hamburger-menu">
             <span></span>
             <span></span>
@@ -363,13 +352,6 @@ export default function BlogPage() {
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             Book a free strategy call to discuss how we can help you generate more qualified solar leads and increase your installation volume.
           </p>
-          <a 
-            href="https://calendly.com/pat-solarlift/30min" 
-            className="inline-block bg-[#F9C846] text-gray-900 font-bold px-8 py-3 rounded-full hover:bg-[#f0bf3a] transition-colors"
-            target="_blank"
-          >
-            Book Your Strategy Call
-          </a>
         </div>
       </div>
     </>
