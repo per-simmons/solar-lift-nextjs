@@ -663,50 +663,6 @@ html, body {
   @apply mt-6;
 }
 
-.video-container {
-  @apply my-10 max-w-4xl mx-auto;
-}
-
-.custom-video-player {
-  @apply relative w-full rounded-2xl overflow-hidden shadow-lg;
-  aspect-ratio: 16/9;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
-}
-
-.custom-video-player video {
-  @apply w-full h-full object-cover;
-}
-
-.video-overlay {
-  @apply absolute top-0 left-0 w-full h-full flex items-center justify-center cursor-pointer;
-  background: rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.custom-video-player:hover .video-overlay {
-  opacity: 1;
-}
-
-.play-button, .pause-button {
-  @apply bg-[#ffce01] rounded-full flex items-center justify-center text-white shadow-md;
-  height: 80px;
-  width: 80px;
-  transition: transform 0.2s ease;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 5;
-}
-
-.play-button:hover, .pause-button:hover {
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
-.hidden {
-  display: none;
-}
 
 .stats-container {
   @apply mt-12 max-w-4xl mx-auto relative;
